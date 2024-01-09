@@ -6,6 +6,7 @@
 #include <string>
 #include <random>
 #include <memory>
+#include <thread>
 
 struct A {
     int x;
@@ -87,4 +88,5 @@ int main() {
     // Smart pointers : unique_ptr
     auto uPtr = std::make_unique<std::string>("hola");
     std::cout << "unique ptr : " << *uPtr << std::endl;
+
 }
