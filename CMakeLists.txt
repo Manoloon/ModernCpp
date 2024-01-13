@@ -3,4 +3,4 @@ project(ModernCpp)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ModernCpp main.cpp main.cpp BasicThreads.h)
+add_executable(ModernCpp main.cpp main.cpp src/BasicThreads.h src/TimedMutex.h src/BasicModernCpp.h src/uniqueLock.h)
