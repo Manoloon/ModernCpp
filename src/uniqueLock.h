@@ -19,7 +19,7 @@ namespace uniqueLock{
         	std::lock_guard lck_guard(mutex);
             std::unique_lock uniLock(mutex);
             std::cout << str[0] << str[1] << str[2] << std::endl;
-            //throw Exception;
+            throw Exception();
             uniLock.unlock();
         	std::this_thread::sleep_for(5s);
             }

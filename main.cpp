@@ -10,11 +10,11 @@
 
 int main() {
         std::vector<std::thread> threads;
-        std::vector<std::string> strings{"abc","def","ghi","jkl","mno"};
 		for(int i = 0; i<5;i++){
-					threads.emplace_back(LockGuard::Print(strings[i]));
+            threads.emplace_back(LckGuard::Print);
 		}
         for(auto &t : threads){
             t.join();
         }
+
 }

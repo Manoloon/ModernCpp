@@ -6,15 +6,16 @@
 #include <chrono>
 #include <string_view>
 
-namespace LockGuard{
+namespace LckGuard{
     using namespace std::chrono_literals;
+    std::vector<std::string> strings{"abc","def","ghi","jkl","mno"};
     std::mutex mutex;
-    void Print(std::string_view str){
+    void Print(){
         for(int i =0; i<5;i++){
             try{   
         	std::lock_guard lck_guard(mutex);
-            std::cout << str[0] << str[1] << str[2] << std::endl;
-            throw std::exception;
+            std::cout << strings[0] << strings[1] << strings[2] << std::endl;
+            throw std::exception();
         	std::this_thread::sleep_for(5s);
             }
             catch(const std::exception& e){
