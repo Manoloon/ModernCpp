@@ -14,10 +14,10 @@ namespace LockGuard{
             try{   
         	std::lock_guard lck_guard(mutex);
             std::cout << str[0] << str[1] << str[2] << std::endl;
-            throw Exception;	
+            throw std::exception;
         	std::this_thread::sleep_for(5s);
             }
-            catch(const Exception& e){
+            catch(const std::exception& e){
                 std::cout << "Exception caught :" << e.what() << std::endl;
             }
         } 

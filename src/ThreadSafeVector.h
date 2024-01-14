@@ -4,7 +4,7 @@
 #include<vector>
 #include<mutex>
 
-template class <typename T>
+template<typename T>
 class ThreadSafeVec{
     std::mutex mut;
     std::vector<T> vec;
