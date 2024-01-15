@@ -4,17 +4,23 @@
 #include <thread>
 #include <vector>
 #include <string>
-#include "src/TimedMutex.h"
-#include "src/lockGuard.h"
+
+#include "src/uniqueLock.h"
 #include "src/ThreadSafeVector.h"
 
 int main() {
-        std::vector<std::thread> threads;
-		for(int i = 0; i<5;i++){
-            threads.emplace_back(LckGuard::Print);
-		}
-        for(auto &t : threads){
+    ThreadSafeVec<int> tsVec;
+    std::vector<std::thread> threads;
+    std::vector<std::string> strings{"abc", "def", "ghi", "jkl", "mno"};
+    for (int i = 0; i < 5; i++) {
+        // testing unique_lock
+        //threads.emplace_back(uniqueLock::Print, strings[i]);
+        tsVec.push_back(i);
+        tsVec.print();
+    }
+    for (auto &t: threads) {
+        if (t.joinable()) {
             t.join();
         }
-
+    }
 }
