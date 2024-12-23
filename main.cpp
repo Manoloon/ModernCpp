@@ -1,33 +1,17 @@
 //
 // Created by Manoloon on 28/12/2023.
 //
-#include <thread>
 #include <vector>
-#include <string>
-#include "src/MyTimer.h"
+#include "src/conceptTest.hpp"
+#include "src/RangesWithViews.hpp"
 
-#include "src/uniqueLock.h"
-#include "src/ThreadSafeVector.h"
-void ThreadVec(const std::vector<std::string>& vec)
-{
-    ThreadSafeVec<int> tsVec;
-    std::vector<std::thread> threads;
-    for (int i = 0; i < 5; i++) {
-        // testing unique_lock
-        //threads.emplace_back(uniqueLock::Print, strings[i]);
-        tsVec.push_back(i);
-        tsVec.print();
-    }
-    for (auto &t: threads) {
-        if (t.joinable()) {
-            t.join();
-        }
-    }
-}
 int main() {
-    
-    std::vector<std::string> strings{"abc", "def", "ghi", "jkl", "mno"};
-    auto t1 = MyTimer<std::chrono::nanoseconds>::duration(ThreadVec,strings);
-    std::cout << std::endl;
-    std::cout << std::chrono::duration<double,std::milli>(t1).count() << "ms";
+    //MySortTest();
+        std::vector<int> vec{98, 38, 24, 66, 70, 48, 82, 41, 8, 29, 10, 1, 40, 53, 7, 80, 43, 45, 46, 25, 
+                        68, 96, 14, 95, 20, 31, 74, 75, 16, 85, 30, 34, 92, 58, 42, 19, 33, 56, 79, 59, 
+                        65, 22, 73, 44, 83, 71, 49, 36, 21, 11, 84, 63, 28, 26, 37, 67, 77, 89, 39, 69, 
+                        81, 52, 13, 3, 27, 100, 15, 97, 76, 47, 78, 54, 60, 72, 32, 57, 99, 35, 64, 93, 62, 
+                        55, 88, 86, 87, 50, 9, 23, 6, 5, 12, 17, 61, 4, 2, 18, 51, 94, 91, 90};
+    FindGreaterAndDoubleIt(vec,90);
+    return 0;
 }
