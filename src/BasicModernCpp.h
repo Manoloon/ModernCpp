@@ -56,13 +56,13 @@ namespace lambda{
     void selectiveCapture(){
         // selective
         A ObjectA;
+        int x = 2;
         ObjectA.x = 1;
         ObjectA.y = 1;
         std::cout << "Object A : " << ObjectA.x << ", " << ObjectA.y << std::endl;
         std::cout << "Selective Capture" << std::endl;
         [=, &ObjectA](int arg) { return (ObjectA.x++ * arg, 2 * arg); }(2);
         std::cout << "Capture selective ObjectA is by ref :" << ObjectA.x << ", others by value x : " << x << std::endl;
-
     }
 }
 
@@ -105,3 +105,4 @@ namespace randomNumbers{
         std::cout << "unique ptr : " << *uPtr << std::endl;
     }
 }
+#endif MODERNCPP_BASICMODERNCPP_H
