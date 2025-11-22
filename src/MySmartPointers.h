@@ -88,6 +88,11 @@ public:
     {
         return p;
     }
+    // Pointer-like functions
+    T& operator*() noexcept {return *p;}
+    const T& operator*() const noexcept {return *p;}
+    T& operator->() noexcept {return p;}
+    const T& operator->() const noexcept {return p;}
 };
 
 // unique_ptr specialization for arrays
@@ -138,6 +143,23 @@ class unique_ptr<T[], D> : std::conditional_t<is_deleter_function_candidate_v<D>
     {
         return p;
     }
+    // pointer-like functions 
+    T& operator[](std::size_t n) noexcept {return p[n];}
+    const T& operator[](std::size_t n) const noexcept {return p[n];}
 };
 
+void TestUniquePtr()
+{
+    struct X{};
+    // this goes on main
+    //unique_ptr<X> p{new X};
+    class S
+    {
+        ~S(){}
+        public:
+        static void destroy(X *p){delete p;}
+    };
+    //this goes on main
+    //unique_ptr<S,&S::destroy> p{new S;}
+}
 
