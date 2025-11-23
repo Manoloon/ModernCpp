@@ -232,12 +232,17 @@ class shared_ptr{
 */
 // interface for clonable pointer
 // this option is the less desirable because it force the user to use the interface , this also add an overhead
-struct clonable
+struct IClonable
 {
-    virtual clonable* clone() const = 0;
-    virtual ~clonable() = default;
+    virtual IClonable* clone() const = 0;
+    virtual ~IClonable() = default;
 };
-
+// using concepta
+template<class T>
+concept clonable = requires(const T* p)
+{
+    {p->clone()}-> std::convertible_to<T*>;
+};
 struct Copier
 {
     template<class T>
@@ -248,14 +253,16 @@ struct Cloner
     template<class T>
     T* operator() (const T* p) const { return p->clone();}
 };
-
-template<class T, class Dup = std::conditional_t<std::is_base_of_v<clonable,T>,Cloner,Copier>>
-class dup_ptr
+namespace usingInterface
 {
-    T* p{};
-    public:
-    dup_ptr(const dup_ptr& other):p{other.empty()? nullptr : Dup{}(other.p)}{}
-};
+    template<class T, class Dup = std::conditional_t<std::is_base_of_v<IClonable,T>,Cloner,Copier>>
+    class dup_ptr
+    {
+        T* p{};
+        public:
+        dup_ptr(const dup_ptr& other):p{other.empty()? nullptr : Dup{}(other.p)}{}
+    };
+}
 
 ///////////////////////////////////////////////////////////
 // using type_traits , Dr Walter Brown std::void_t
@@ -272,7 +279,19 @@ class dup_ptr
     public:
     dup_ptr(const dup_ptr& other): p{other.empty() ? nullptr : Dup{}(other.p)}{}
 };
+/////////////////////////////
+/////// using concepts 
 
+namespace usingConcepts
+{
+    template<class T, class Dup = std::conditional_t<clonable<T>,Cloner,Copier>>
+    class dup_ptr
+    {
+        T* p{};
+        public:
+        dup_ptr(const dup_ptr& other):p{other.empty()? nullptr : Dup{}(other.p)}{}
+    };
+}
 
 ///////////////////////////////////////////////////////////////
 void TestUniquePtr()
